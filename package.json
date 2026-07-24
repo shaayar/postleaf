@@ -1,6 +1,6 @@
 {
-  "name": "@once-ui-system/sb-starter",
-  "version": "1.0.0",
+  "name": "postleaf",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -13,12 +13,11 @@
   "dependencies": {
     "@next/mdx": "^16.0.10",
     "@once-ui-system/core": "latest",
-    "@supabase/ssr": "latest",
-    "@supabase/supabase-js": "latest",
-    "@upstash/ratelimit": "latest",
-    "@upstash/redis": "latest",
+    "@supabase/ssr": "^0.12.3",
+    "@supabase/supabase-js": "^2.110.8",
     "classnames": "^2.5.1",
     "gray-matter": "^4.0.3",
+    "gsap": "^3.15.0",
     "next": "latest",
     "next-mdx-remote": "^6.0.0",
     "react": "^19.2.3",

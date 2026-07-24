@@ -2,12 +2,24 @@ import { NextResponse } from "next/server";
 import { createClient as createServiceClient } from "@supabase/supabase-js";
 import { createClient as createServerSupabase } from "@/lib/sb/server";
 
-export const runtime = "nodejs"; // Required to safely use the service role key
+export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+async function getServiceClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url || !serviceRoleKey) {
+    return null;
+  }
+
+  return createServiceClient(url, serviceRoleKey, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+}
 
 export async function GET() {
   try {
-    // 1) Identify the current user from auth cookies via your SSR client
     const supabase = await createServerSupabase();
     const {
       data: { user },
@@ -25,11 +37,8 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // 2) Use a service-role client to bypass RLS for the actual data fetch
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-    if (!url || !serviceRoleKey) {
+    const serviceClient = await getServiceClient();
+    if (!serviceClient) {
       return NextResponse.json(
         {
           error:
@@ -39,16 +48,22 @@ export async function GET() {
       );
     }
 
-    const serviceClient = createServiceClient(url, serviceRoleKey, {
-      auth: { persistSession: false, autoRefreshToken: false },
-    });
+    const { error: ensureProfileError } = await serviceClient
+      .from("profiles")
+      .upsert({ id: user.id }, { onConflict: "id" });
 
-    // 3) Enforce ownership by filtering on the authenticated user's id
+    if (ensureProfileError) {
+      return NextResponse.json(
+        { error: "Failed to prepare profile", details: ensureProfileError.message },
+        { status: 500 },
+      );
+    }
+
     const { data, error } = await serviceClient
       .from("profiles")
       .select("avatar_url, username, bio")
       .eq("id", user.id)
-      .single();
+      .maybeSingle();
 
     if (error) {
       return NextResponse.json(
@@ -61,29 +76,8 @@ export async function GET() {
       return NextResponse.json({ error: "Profile not found" }, { status: 404 });
     }
 
-    // Fetch user's global role (read-only)
-    const { data: roleRow, error: roleError } = await serviceClient
-      .from("user_global_roles")
-      .select("role_id")
-      .eq("user_id", user.id)
-      .maybeSingle();
-
-    // If role fetch errors, don't block the profile fetch; expose null role
-    const roleId = roleError ? null : roleRow?.role_id ?? null;
-
-    // Get role rank from roles table if we have a roleId
-    let roleRank: number | null = null;
-    if (roleId) {
-      const { data: rolesRow, error: rolesErr } = await serviceClient
-        .from("roles")
-        .select("rank")
-        .eq("id", roleId)
-        .maybeSingle();
-      roleRank = rolesErr ? null : rolesRow?.rank ?? null;
-    }
-
     return NextResponse.json(
-      { profile: data, email: user.email ?? null, roleId, roleRank },
+      { profile: data, email: user.email ?? null },
       { status: 200 },
     );
   } catch (err) {
@@ -97,7 +91,6 @@ export async function GET() {
 
 export async function PATCH(request: Request) {
   try {
-    // Identify current user (from cookies)
     const supabase = await createServerSupabase();
     const {
       data: { user },
@@ -110,6 +103,7 @@ export async function PATCH(request: Request) {
         { status: 401 },
       );
     }
+
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -120,7 +114,9 @@ export async function PATCH(request: Request) {
     if (typeof body.bio === "string") updates.bio = body.bio.trim();
 
     const allowedKeys = ["username", "bio"] as const;
-    const hasAllowed = Object.keys(updates).some((k) => (allowedKeys as readonly string[]).includes(k));
+    const hasAllowed = Object.keys(updates).some((k) =>
+      (allowedKeys as readonly string[]).includes(k),
+    );
     if (!hasAllowed) {
       return NextResponse.json(
         { error: "No valid fields provided. Allowed: username, bio" },
@@ -128,23 +124,23 @@ export async function PATCH(request: Request) {
       );
     }
 
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-    if (!url || !serviceRoleKey) {
+    const serviceClient = await getServiceClient();
+    if (!serviceClient) {
       return NextResponse.json(
         { error: "Server is missing SUPABASE configuration" },
         { status: 500 },
       );
     }
 
-    const serviceClient = createServiceClient(url, serviceRoleKey, {
-      auth: { persistSession: false, autoRefreshToken: false },
-    });
-
     const { data, error } = await serviceClient
       .from("profiles")
-      .update(updates)
-      .eq("id", user.id)
+      .upsert(
+        {
+          id: user.id,
+          ...updates,
+        },
+        { onConflict: "id" },
+      )
       .select("avatar_url, username, bio")
       .single();
 
@@ -155,28 +151,8 @@ export async function PATCH(request: Request) {
       );
     }
 
-    // Also return role (read-only; not modified here)
-    const { data: roleRow, error: roleError } = await serviceClient
-      .from("user_global_roles")
-      .select("role_id")
-      .eq("user_id", user.id)
-      .maybeSingle();
-
-    const roleId = roleError ? null : roleRow?.role_id ?? null;
-
-    // Lookup role rank if roleId is present
-    let roleRank: number | null = null;
-    if (roleId) {
-      const { data: rolesRow, error: rolesErr } = await serviceClient
-        .from("roles")
-        .select("rank")
-        .eq("id", roleId)
-        .maybeSingle();
-      roleRank = rolesErr ? null : rolesRow?.rank ?? null;
-    }
-
     return NextResponse.json(
-      { profile: data, email: user.email ?? null, roleId, roleRank },
+      { profile: data, email: user.email ?? null },
       { status: 200 },
     );
   } catch (err) {

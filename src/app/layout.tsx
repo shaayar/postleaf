@@ -5,7 +5,7 @@ import '@/resources/custom.css'
 import classNames from "classnames";
 
 import { baseURL, fonts, effects, style, dataStyle } from "@/resources/once-ui.config";
-import { Meta, Schema,  Column, Flex, opacity, SpacingToken, Background} from "@once-ui-system/core";
+import { Meta, Schema,  Column, Flex, Opacity, SpacingToken, Background} from "@once-ui-system/core";
 import { Providers } from '@/components/Providers';
 import { meta } from '@/resources/seo';
 
@@ -119,7 +119,7 @@ export default function RootLayout({
             }}
             gradient={{
               display: effects.gradient.display,
-              opacity: effects.gradient.opacity as opacity,
+              opacity: effects.gradient.opacity as Opacity,
               x: effects.gradient.x,
               y: effects.gradient.y,
               width: effects.gradient.width,
@@ -130,20 +130,20 @@ export default function RootLayout({
             }}
             dots={{
               display: effects.dots.display,
-              opacity: effects.dots.opacity as opacity,
+              opacity: effects.dots.opacity as Opacity,
               size: effects.dots.size as SpacingToken,
               color: effects.dots.color,
             }}
             grid={{
               display: effects.grid.display,
-              opacity: effects.grid.opacity as opacity,
+              opacity: effects.grid.opacity as Opacity,
               color: effects.grid.color,
               width: effects.grid.width,
               height: effects.grid.height,
             }}
             lines={{
               display: effects.lines.display,
-              opacity: effects.lines.opacity as opacity,
+              opacity: effects.lines.opacity as Opacity,
               size: effects.lines.size as SpacingToken,
               thickness: effects.lines.thickness,
               angle: effects.lines.angle,

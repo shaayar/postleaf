@@ -6,6 +6,19 @@ import { Buffer } from "node:buffer";
 export const runtime = "nodejs"; // Required to safely use the service role key
 export const dynamic = "force-dynamic";
 
+async function getServiceClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url || !serviceRoleKey) {
+    return null;
+  }
+
+  return createServiceClient(url, serviceRoleKey, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+}
+
 export async function POST(request: Request) {
   try {
     // Identify current user
@@ -35,22 +48,16 @@ export async function POST(request: Request) {
       );
     }
 
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-    if (!url || !serviceRoleKey) {
+    const serviceClient = await getServiceClient();
+    if (!serviceClient) {
       return NextResponse.json(
         { error: "Server is missing SUPABASE configuration" },
         { status: 500 },
       );
     }
 
-    const serviceClient = createServiceClient(url, serviceRoleKey, {
-      auth: { persistSession: false, autoRefreshToken: false },
-    });
-
-    const fileExt = file.name.split(".").pop()?.toLowerCase() || "bin";
-    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-    const objectPath = `${user.id}/avatar/${Date.now()}-${safeName}`;
+    const fileExt = file.name.split(".").pop()?.toLowerCase() || "png";
+    const objectPath = `${user.id}/avatar.${fileExt}`;
 
     // Convert the uploaded File (web) to a Buffer for Node.js runtime compatibility
     const arrayBuffer = await file.arrayBuffer();
@@ -61,8 +68,14 @@ export async function POST(request: Request) {
       .from("profiles")
       .upload(objectPath, buffer, {
         cacheControl: "3600",
-        upsert: true, // allow overwriting the same name if it occurs
-        contentType: file.type || (fileExt === "png" ? "image/png" : fileExt === "jpg" || fileExt === "jpeg" ? "image/jpeg" : undefined),
+        upsert: true,
+        contentType:
+          file.type ||
+          (fileExt === "png"
+            ? "image/png"
+            : fileExt === "jpg" || fileExt === "jpeg"
+              ? "image/jpeg"
+              : undefined),
       });
 
     if (uploadError) {
@@ -78,12 +91,21 @@ export async function POST(request: Request) {
     const { data: publicUrlData } = serviceClient.storage.from("profiles").getPublicUrl(objectPath);
     const avatarUrl = publicUrlData.publicUrl;
 
-    // Update profile row
+    const { error: ensureProfileError } = await serviceClient
+      .from("profiles")
+      .upsert({ id: user.id, avatar_url: avatarUrl }, { onConflict: "id" });
+
+    if (ensureProfileError) {
+      return NextResponse.json(
+        { error: "Failed to update profile with avatar", details: ensureProfileError.message },
+        { status: 500 },
+      );
+    }
+
     const { data: updated, error: updateError } = await serviceClient
       .from("profiles")
-      .update({ avatar_url: avatarUrl })
-      .eq("id", user.id)
       .select("avatar_url, username, bio")
+      .eq("id", user.id)
       .single();
 
     if (updateError) {

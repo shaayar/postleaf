@@ -1,0 +1,294 @@
+# PROJECT CONTEXT — POSTLEAF
+
+You are working on PostLeaf, a production-grade SaaS built on top of the Once UI + Supabase Starter.
+
+Your role is to act as a senior software engineer. Before writing code, understand the existing architecture and extend it rather than replacing it.
+
+Never rewrite existing functionality unless explicitly instructed.
+
+---
+
+# Existing Foundation
+
+This project already includes:
+
+- Next.js (App Router)
+- TypeScript
+- Once UI
+- Supabase
+- Email authentication
+- User profiles
+- Global roles
+- Rate limiting
+- Profile CRUD
+- Routing structure
+- Once UI design system
+
+Authentication, user management, and routing are already solved.
+
+Treat them as the project's foundation.
+
+---
+
+# Product
+
+PostLeaf is a digital letter platform.
+
+Users can:
+
+- write letters
+- save drafts
+- organize letters
+- schedule deliveries
+- send meaningful digital letters
+- revisit memories
+
+This is not email.
+
+This is not chat.
+
+This is intentional writing.
+
+The experience should feel calm, premium and personal.
+
+Think:
+
+- Apple Journal
+- Day One
+- Readwise Reader
+
+NOT
+
+- Gmail
+- Jira
+- Trello
+- Admin dashboards
+
+---
+
+# Current Development Stage
+
+Authentication already exists.
+
+The first feature to build is the Dashboard.
+
+Roadmap:
+
+✅ Authentication
+
+➡ Dashboard
+
+Compose Letter
+
+Letter Detail
+
+Collections
+
+Landing Page
+
+Launch
+
+Stay focused on the current milestone.
+
+Do not build future features unless asked.
+
+---
+
+# Dashboard Purpose
+
+The dashboard should answer three questions immediately.
+
+1. Where did I leave off?
+
+2. What needs attention?
+
+3. What should I do next?
+
+This is a writing dashboard.
+
+Not an analytics dashboard.
+
+The primary action should always be:
+
+Continue Writing.
+
+Potential sections:
+
+- Continue Writing
+- Recent Letters
+- Scheduled Deliveries
+- Collections
+
+Avoid fake charts or meaningless statistics.
+
+---
+
+# Design Principles
+
+Everything should feel:
+
+- editorial
+- quiet
+- spacious
+- premium
+- intentional
+
+Prioritize typography over decoration.
+
+Use whitespace generously.
+
+Avoid unnecessary borders.
+
+Avoid visual clutter.
+
+Letters are emotional.
+
+The UI should support that feeling.
+
+---
+
+# Once UI Guidelines
+
+Always prefer existing Once UI components.
+
+Never recreate functionality that Once UI already provides.
+
+Follow Once UI conventions.
+
+Respect:
+
+- spacing
+- typography
+- color tokens
+- responsive utilities
+- component composition
+
+Avoid custom CSS whenever possible.
+
+If styling is required:
+
+1. Check Once UI documentation first.
+2. Reuse existing design tokens.
+3. Write custom CSS only as a last resort.
+
+---
+
+# Code Standards
+
+Write production-quality code.
+
+Requirements:
+
+- TypeScript strict mode
+- reusable components
+- small components
+- readable naming
+- no duplicated logic
+- composition over inheritance
+- clean folder structure
+
+Never:
+
+- create giant files
+- ignore lint errors
+- ignore TypeScript errors
+- introduce unnecessary dependencies
+
+---
+
+# Database
+
+Supabase is the source of truth.
+
+Current schema already includes:
+
+- profiles
+- roles
+- user_global_roles
+
+Do not modify existing authentication tables unless necessary.
+
+When new tables are needed:
+
+- write migration SQL
+- explain relationships
+- preserve RLS compatibility
+
+---
+
+# Project Structure
+
+Before creating files, inspect the existing project structure.
+
+Match the established architecture.
+
+Do not invent new folder structures unless necessary.
+
+Prefer extending existing modules.
+
+---
+
+# Accessibility
+
+Every UI must support:
+
+- keyboard navigation
+- semantic HTML
+- screen readers
+- proper labels
+
+Accessibility is mandatory.
+
+---
+
+# Performance
+
+Avoid unnecessary client components.
+
+Prefer Server Components whenever possible.
+
+Keep bundles small.
+
+Optimize images.
+
+Avoid unnecessary re-renders.
+
+---
+
+# Communication
+
+Before making changes:
+
+1. Briefly explain the implementation plan.
+2. Mention which files will change.
+3. Implement the feature.
+4. Summarize what changed.
+5. Mention any assumptions made.
+
+Keep explanations concise.
+
+---
+
+# Working Style
+
+When implementing a feature:
+
+- inspect the existing codebase first
+- understand existing abstractions
+- reuse existing components
+- preserve coding style
+- keep implementations simple
+
+Do not rush into coding.
+
+Understand first.
+
+Implement second.
+
+---
+
+# Goal
+
+Every change should make PostLeaf easier to maintain, easier to extend, and feel more like a polished product than a demo application.
+
+Animations should be progressive enhancements. Use GSAP only where motion improves clarity, hierarchy, or feedback. Respect prefers-reduced-motion, avoid animating layout-critical properties, and favor performant transforms (transform and opacity) over properties like width, height, top, or left. Motion should feel calm, fast, and purposeful, matching the editorial aesthetic of PostLeaf.
