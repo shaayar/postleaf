@@ -117,7 +117,7 @@ export default function DashboardPage() {
                 </Row>
             </Column>
 
-            {/* Bottom Section */}
+            {/* Bottom Section */}  
 
             <Row fillWidth gap="16" wrap>
                 {/* Vault */}

@@ -3,22 +3,22 @@ import { meta } from "./seo";
 const baseURL = "https://sb.once-ui.com";
 
 // Import and set font for each variant
-import { Geist } from "next/font/google";
+import { Cormorant_Garamond, Sora } from "next/font/google";
 import { Geist_Mono } from "next/font/google";
 
-const heading = Geist({
+const heading = Cormorant_Garamond({
   variable: "--font-heading",
   subsets: ["latin"],
   display: "swap",
 });
 
-const body = Geist({
+const body = Sora({
   variable: "--font-body",
   subsets: ["latin"],
   display: "swap",
 });
 
-const label = Geist({
+const label = Cormorant_Garamond({
   variable: "--font-label",
   subsets: ["latin"],
   display: "swap",
@@ -38,18 +38,31 @@ const fonts = {
 };
 
 // default customization applied to the HTML in the main layout.tsx
+// const style = {
+//   theme: "system", // dark | light | system
+//   neutral: "gray", // sand | gray | slate
+//   brand: "emerald", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
+//   accent: "orange", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
+//   solid: "inverse", // color | contrast | inverse
+//   solidStyle: "flat", // flat | plastic
+//   border: "playful", // rounded | playful | conservative
+//   surface: "translucent", // filled | translucent
+//   transition: "all", // all | micro | macro
+//   scaling: "100", // 90 | 95 | 100 | 105 | 110
+// };
+
 const style = {
-  theme: "system", // dark | light | system
-  neutral: "gray", // sand | gray | slate
-  brand: "emerald", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
-  accent: "orange", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
-  solid: "inverse", // color | contrast | inverse
-  solidStyle: "flat", // flat | plastic
-  border: "playful", // rounded | playful | conservative
-  surface: "translucent", // filled | translucent
-  transition: "all", // all | micro | macro
-  scaling: "100", // 90 | 95 | 100 | 105 | 110
-};
+  theme: "dark",
+  brand: "emerald",
+  accent: "custom",
+  neutral: "gray",
+  border: "playful",
+  solid: "inverse",
+  solidStyle: "flat",
+  surface: "translucent",
+  transition: "all",
+  scaling: "100",
+}
 
 const dataStyle = {
   variant: "gradient", // flat | gradient | outline
@@ -117,9 +130,9 @@ const schema = {
 
 // social links
 const social = {
-  threads: "https://www.threads.com/@once_ui",
+  threads: "https://www.threads.com/@shubh.builds.web",
   discord: "https://discord.com/invite/5EyAQ4eNdS",
-  github: "https://github.com/once-ui-system",
+  github: "https://github.com/shaayar",
 };
 
 export { baseURL, fonts, style, schema, social, effects, dataStyle };

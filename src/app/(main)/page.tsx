@@ -2,7 +2,9 @@
 
 // import { Heading, Text, Button, Column, Badge, Logo, Background, Row, Line, Grid, } from "@once-ui-system/core";
 import { useUser } from "@/components/UserProvider";
-import Hero  from "@/components/hero/Hero";
+import Hero from "@/components/Landing/Hero";
+import { Introduction } from "@/components/Landing/Introduction";
+import WhyPostLeafExists from "@/components/Landing/WhyPostLeaf";
 
 const features = [
   {
@@ -104,6 +106,10 @@ export default function Home() {
     //   </Column>
     // </Column>
 
-    <Hero />
+    <>
+      <Hero />
+      <Introduction />
+      <WhyPostLeafExists />
+    </>
   );
 }

@@ -310,8 +310,8 @@ export const Header: React.FC<React.ComponentProps<typeof Row>> = ({
                     padding="32"
                     gap="32"
                 >
-                    <Logo dark icon="/trademarks/wordmark-dark.svg" href="/" size="s" />
-                    <Logo light icon="/trademarks/wordmark-light.svg" href="/" size="s" />
+                    {/* <Logo dark icon="/trademarks/wordmark-dark.svg" href="/" size="s" /> */}
+                    {/* <Logo light icon="/trademarks/wordmark-light.svg" href="/" size="s" /> */}
 
                     <Column
                         ref={menuItemsRef}

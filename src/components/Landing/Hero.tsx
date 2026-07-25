@@ -1,8 +1,12 @@
 "use client";
 
 import { Background, Button, Column, Heading, Row, Text, } from "@once-ui-system/core";
+import { useUser } from "@/components/UserProvider";
+import { RevealFx } from "@once-ui-system/core";
 
 export default function Hero() {
+    const { profile } = useUser();
+
     return (
         <Column
             position="relative"
@@ -78,22 +82,25 @@ export default function Hero() {
                 paddingX="24"
             >
                 <Heading
-                    variant="display-strong-xl"
+                    variant="display-strong-l"
                     align="center"
                 >
-                    Some words deserve
-                    <br />
-                    to last forever.
+                    <RevealFx translateY={2} >
+                        Some words deserve
+                        <br />
+                        to last forever.
+                    </RevealFx>
                 </Heading>
 
                 <Text
                     variant="heading-default-l"
                     align="center"
-                    onBackground="neutral-medium"
+                    // onBackground="neutral-medium"
                     wrap="balance"
                 >
-                    Write personal letters, preserve meaningful moments,
-                    and share stories that outlive the moment they were written.
+                    <RevealFx delay={0.6} translateY={2}>
+                        Write personal letters, preserve meaningful moments, and share stories that <br /> outlive the moment they were written.
+                    </RevealFx>
                 </Text>
 
                 <Row
@@ -102,16 +109,18 @@ export default function Hero() {
                     wrap
                     horizontal="center"
                 >
-                    <Button
-                        href="/auth?state=signup"
-                        label="Start Writing"
-                    />
+                    <RevealFx delay={0.9} translateY={2}>
+                        <Button
+                            href={profile ? "/dashboard" : "/auth?state=login"}
+                            label="Start Writing"
+                        />
 
-                    <Button
-                        href="/community"
-                        variant="secondary"
-                        label="Explore Community"
-                    />
+                        <Button
+                            href={profile ? "/community" : "/auth?state=login"}
+                            variant="secondary"
+                            label="Explore Community"
+                        />
+                    </RevealFx>
                 </Row>
             </Column>
         </Column>

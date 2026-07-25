@@ -2,7 +2,7 @@
 export const meta = {
   home: {
     path: "/",
-    title: "Once UI + Supabase",
+    title: "PostLeaf",
     description:
       "The elegance of Once UI meets the power of Supabase.",
     image: "/images/og/home.jpg",
