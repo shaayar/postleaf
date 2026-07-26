@@ -3,24 +3,20 @@ import '@once-ui-system/core/css/tokens.css';
 import '@/resources/custom.css'
 
 import classNames from "classnames";
+import type { Metadata } from "next";
 
 import { baseURL, fonts, effects, style, dataStyle } from "@/resources/once-ui.config";
 import { Meta, Schema,  Column, Flex, Opacity, SpacingToken, Background} from "@once-ui-system/core";
 import { Providers } from '@/components/Providers';
-import { meta } from '@/resources/seo';
 
-export async function generateMetadata() {
-  return Meta.generate({
-    title: meta.home.title,
-    description: meta.home.description,
-    baseURL: baseURL,
-    path: meta.home.path,
-    canonical: meta.home.canonical,
-    image: meta.home.image,
-    robots: meta.home.robots,
-    alternates: meta.home.alternates,
-  });
-}
+export const metadata: Metadata = {
+  metadataBase: new URL(baseURL),
+  title: {
+    default: "PostLeaf",
+    template: "%s | PostLeaf",
+  },
+  description: "The elegance of Once UI meets the power of Supabase.",
+};
 
 export default function RootLayout({
   children,
@@ -40,13 +36,7 @@ export default function RootLayout({
         fonts.code.variable,
       )}
     >
-      <Schema
-        as="webPage"
-        baseURL={baseURL}
-        title={meta.home.title}
-        description={meta.home.description}
-        path={meta.home.path}
-      />
+      
       <head>
         <script
           id="theme-init"

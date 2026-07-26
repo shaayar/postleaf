@@ -1,8 +1,9 @@
 import { Button, Column, Icon, Logo, Row, SmartLink, Text, } from "@once-ui-system/core";
 
 export const Footer: React.FC<React.ComponentProps<typeof Row>> = ({ ...flex }) => {
+
   return (
-    <Column gap="40" fillWidth paddingY="l" paddingX="40" {...flex}>
+    <Column gap="40" fillWidth paddingY="l" paddingX="xl" {...flex}>
       <Row fillWidth gap="12" textVariant="label-default-m" horizontal="between" vertical="center">
         <Logo href="#" dark icon="/trademarks/wordmark-dark.svg" size="m" />
         <Logo href="#" light icon="/trademarks/wordmark-light.svg" size="m" />

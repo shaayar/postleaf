@@ -2,7 +2,7 @@ import React from 'react'
 
 const Write = () => {
   return (
-    <div padding={12}>
+    <div style={{ padding: 12 }}>
       Hii from write page
     </div>
   )
