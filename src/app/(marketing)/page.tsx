@@ -8,6 +8,9 @@ import { Experiences } from "@/components/Landing/Experiences";
 import { Journey } from "@/components/Landing/Journey";
 import { CommunityPreview } from "@/components/Landing/CommunityPreview";
 import { Testimonials } from "@/components/Landing/Testimonials";
+import { Privacy } from "@/components/Landing/Privacy";
+import { FAQ } from "@/components/Landing/FAQ";
+import { CTA } from "@/components/Landing/CTA";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -36,10 +39,13 @@ export default function Home() {
       <Hero />
       <Introduction />
       <WhyPostLeafExists />
-      <Experiences />
+      {/* <Experiences /> */}
       <Journey />
       <CommunityPreview />
       <Testimonials />
+      <Privacy />
+      <FAQ />
+      <CTA />
     </>
   );
 }

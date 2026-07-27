@@ -48,7 +48,7 @@ export const Introduction: React.FC<
         <Column
             fillWidth
             horizontal="center"
-            paddingY="160"
+            paddingTop={12}
             paddingX={4}
             position="relative"
             overflow="hidden"

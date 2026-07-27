@@ -1,9 +1,4 @@
-import {
-    Column,
-    Heading,
-    Text,
-} from "@once-ui-system/core";
-
+import { Column, Heading, Text, } from "@once-ui-system/core";
 import RevealText from "@/components/UI/RevealText";
 
 export default function WhyPostLeafExists() {
@@ -11,7 +6,7 @@ export default function WhyPostLeafExists() {
         <Column
             fillWidth
             horizontal="center"
-            paddingY="160"
+            paddingTop={8}
             gap="80"
         >
             <Column
@@ -20,7 +15,7 @@ export default function WhyPostLeafExists() {
                 gap="32"
             >
                 <RevealText>
-                    <Text variant="label-strong-m" onBackground="brand-weak" >Why PostLeaf Exists</Text>
+                    <Text variant="label-strong-m" onBackground="brand-weak">Why PostLeaf Exists</Text>
                 </RevealText>
 
                 <RevealText delay={0.05}>

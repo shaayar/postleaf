@@ -47,7 +47,7 @@ export const Journey: React.FC< React.ComponentProps<typeof Column> > = ({ ...re
       fillWidth
       horizontal="center"
       gap="80"
-      paddingY="160"
+      paddingY={8}
       paddingX={4}
       {...rest}
     >
@@ -58,7 +58,7 @@ export const Journey: React.FC< React.ComponentProps<typeof Column> > = ({ ...re
         gap="16"
       >
         <Text
-          variant="label-default-m"
+          variant="label-default-l"
           onBackground="brand-weak"
         >
           {section.eyebrow}

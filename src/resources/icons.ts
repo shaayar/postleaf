@@ -1,11 +1,10 @@
 import { IconType } from "react-icons";
 
-import { HiOutlineRocketLaunch, HiOutlineArrowRightStartOnRectangle, HiOutlineCog6Tooth, HiOutlineBookOpen, } from "react-icons/hi2";
-import { FaGithub, FaDiscord, FaThreads, FaLinkedinIn, FaArrowRight, FaInstagram } from "react-icons/fa6";
-import { CiEdit } from "react-icons/ci";
-import { IoHome } from "react-icons/io5";
-import { TiGroup } from "react-icons/ti";
-import { FaLock } from "react-icons/fa";
+import { HiOutlineRocketLaunch, HiOutlineArrowRightStartOnRectangle, HiOutlineCog6Tooth, HiOutlineBookOpen, HiOutlineArchiveBoxArrowDown, HiOutlineUserGroup } from "react-icons/hi2";
+import { FaGithub, FaDiscord, FaThreads, FaLinkedinIn, FaArrowRight, FaInstagram,  FaStar } from "react-icons/fa6";
+import { CiEdit, CiLock, CiMail } from "react-icons/ci";
+import { IoHeartOutline, IoHomeOutline, IoSparklesOutline } from "react-icons/io5";
+import { HiOutlineGlobeAlt } from "react-icons/hi";
 
 export const iconLibrary: Record<string, IconType> = {
   rocket: HiOutlineRocketLaunch,
@@ -16,12 +15,18 @@ export const iconLibrary: Record<string, IconType> = {
   threads: FaThreads,
   book: HiOutlineBookOpen,
   edit: CiEdit,
-  home: IoHome,
-  group: TiGroup,
-  lock: FaLock,
+  home: IoHomeOutline,
+  group: HiOutlineUserGroup,
+  lock: CiLock,
   linkedin: FaLinkedinIn,
   arrowRight: FaArrowRight,
   instagram: FaInstagram,
+  heart: IoHeartOutline,
+  star: FaStar,
+  globe: HiOutlineGlobeAlt,
+  archive: HiOutlineArchiveBoxArrowDown,
+  sparkles: IoSparklesOutline,
+  mail: CiMail
 };
 
 export type IconLibrary = typeof iconLibrary;

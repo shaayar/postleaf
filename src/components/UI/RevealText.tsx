@@ -26,7 +26,7 @@ interface RevealTextProps {
 export default function RevealText({
     children,
     delay = 0,
-    y = 8,
+    y = 9,
     opacity = 0.3,
     start = "top 65%",
     end = "top 25%",

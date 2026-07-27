@@ -57,7 +57,7 @@ export const CommunityPreview: React.FC< React.ComponentProps<typeof Column> > =
       fillWidth
       horizontal="center"
       gap="64"
-      paddingY="160"
+      paddingBottom={8}
       paddingX={4}
       {...rest}
     >
@@ -124,7 +124,7 @@ export const CommunityPreview: React.FC< React.ComponentProps<typeof Column> > =
             background="surface"
             border="neutral-alpha-medium"
             radius="xl"
-            padding="xl"
+            padding="m"
             gap="24"
           >
             <Column gap="12">
@@ -168,7 +168,7 @@ export const CommunityPreview: React.FC< React.ComponentProps<typeof Column> > =
                 <Row gap="8" vertical="center">
                   <Icon
                     name="heart"
-                    size="xs"
+                    size="s"
                     onBackground="neutral-weak"
                   />
 
@@ -182,7 +182,7 @@ export const CommunityPreview: React.FC< React.ComponentProps<typeof Column> > =
 
                 <Button
                   variant="tertiary"
-                  size="s"
+                  size="l"
                   suffixIcon="arrowRight"
                 >
                   Read
