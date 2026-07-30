@@ -1,7 +1,7 @@
 import { Column, Heading, Text, } from "@once-ui-system/core";
-import RevealText from "@/components/UI/RevealText";
+import RevealText from "./RevealText";
 
-export default function WhyPostLeafExists() {
+export function WhyPostLeaf() {
     return (
         <Column
             fillWidth
@@ -25,18 +25,17 @@ export default function WhyPostLeafExists() {
                 </RevealText>
 
                 <RevealText delay={0.1}>
-                    <Text align="center" variant="body-default-l" onBackground="neutral-weak" wrap="balance">
-                        We write birthday wishes, letters to loved ones, late-night reflections, <br /> and promises to our future selves.
-                        <br /> <br />
+                    <Text as="p" align="center" variant="body-default-l" onBackground="neutral-weak" wrap="balance">
+                        We write birthday wishes, letters to loved ones, late-night reflections,
+                        and promises to our future selves.
                         Yet they're scattered across chats, emails, notes, and forgotten folders
-                        <br /> <br />
                         PostLeaf was created to give those words a place where they could truly stay.
                     </Text>
                 </RevealText>
             </Column>
 
             <Column
-                maxWidth={720}
+                fillWidth
                 horizontal="center"
                 gap="40"
             >

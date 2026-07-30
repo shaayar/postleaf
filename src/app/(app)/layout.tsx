@@ -1,5 +1,5 @@
 import { Column, Row } from "@once-ui-system/core";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/app/(marketing)/components/Sidebar";
 
 export default function AppLayout({
   children,

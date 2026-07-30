@@ -8,7 +8,7 @@ import { useUser } from "@/components/UserProvider";
 import { createClient } from "@/lib/sb/client";
 import { accountNav, appNav } from "@/lib/navigation";
 
-import StaggeredMenu from "./Landing/StaggeredMenu";
+import StaggeredMenu from "./StaggeredMenu";
 
 export default function Sidebar() {
   const router = useRouter();

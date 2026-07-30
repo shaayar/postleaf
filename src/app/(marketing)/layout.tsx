@@ -1,5 +1,6 @@
 import { Column } from "@once-ui-system/core";
-import { Footer, Header } from "@/components";
+import { Footer } from "./components/Footer";
+import { Header } from "./components/Header";
 
 export default function MarketingLayout({
   children,
@@ -10,10 +11,9 @@ export default function MarketingLayout({
     <Column
       fillWidth
       horizontal="center"
-      background="page"
-      style={{ minHeight: "100vh" }}
+      minHeight="100vh"
     >
-      <Header />
+      <Header position="sticky" />
       <Column as="main" fillWidth flex={1}>
         {children}
       </Column>

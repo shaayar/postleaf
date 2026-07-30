@@ -441,14 +441,14 @@ export const Header: React.FC<React.ComponentProps<typeof Row>> = ({
                             dark
                             icon="/trademarks/wordmark-dark.svg"
                             href="/"
-                            size="s"
+                            size="xs"
                         />
 
                         <Logo
                             light
                             icon="/trademarks/wordmark-light.svg"
                             href="/"
-                            size="s"
+                            size="xs"
                         />
                     </Row>
 

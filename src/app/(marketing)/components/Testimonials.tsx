@@ -1,6 +1,6 @@
 "use client";
 
-import { Column, Row, Text, Heading, Icon, MatrixFx, Background, AutoScroll, Fade, Avatar } from "@once-ui-system/core";
+import { Column, Row, Text, Heading, Icon, MatrixFx, Background, AutoScroll, Fade, Avatar, BlobFx } from "@once-ui-system/core";
 
 const defaultTestimonials: Testimonial[] = [
   {
@@ -75,10 +75,9 @@ export const Testimonials: React.FC<TestimonialsSectionProps> = ({
   ...flex
 }) => {
   return (
-    <Column fillWidth gap="32" paddingX={4} {...flex}>
+    <Column fillWidth gap="64" {...flex}>
       <Column
         fillWidth
-        maxWidth={320}
         horizontal="center"
         align="center"
         gap="16"
@@ -98,17 +97,11 @@ export const Testimonials: React.FC<TestimonialsSectionProps> = ({
 
       <Row fillWidth gap="20" vertical="center" xs={{ direction: "column", horizontal: "start" }}>
         <Column minWidth={14} minHeight={14} fillHeight center radius="xl" border="brand-alpha-weak" overflow="hidden" padding="l">
-          <MatrixFx
-            data-solid="color"
+          <BlobFx
             position="absolute"
             left="0"
             top="0"
-            flicker
-            fps={40}
-            revealFrom="top"
-            size={4}
-            spacing={2}
-            colors={["brand-solid-strong", "static-transparent"]}
+            translateY="50%"
           />
           <Background
             fill
@@ -134,11 +127,6 @@ export const Testimonials: React.FC<TestimonialsSectionProps> = ({
         </Column>
 
         <Column fillWidth paddingY="20" flex={1}>
-          <Row fillWidth zIndex={1} paddingLeft="12" paddingBottom="20">
-            <Heading as="h2" variant="heading-strong-l">
-              Loved by many
-            </Heading>
-          </Row>
           <AutoScroll fillWidth speed="slow">
             {testimonials.map((testimonial, index) => (
               <Column

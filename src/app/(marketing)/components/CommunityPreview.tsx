@@ -1,4 +1,4 @@
-import { Badge, Button, Column, Heading, Icon, Row, SmartLink, Text,} from "@once-ui-system/core";
+import { Badge, Button, Column, Grid, Heading, Icon, Row, SmartLink, Tag, Text } from "@once-ui-system/core";
 
 const section = {
   eyebrow: "Community",
@@ -57,12 +57,10 @@ export const CommunityPreview: React.FC< React.ComponentProps<typeof Column> > =
       fillWidth
       horizontal="center"
       gap="64"
-      paddingBottom={8}
-      paddingX={4}
       {...rest}
     >
       <Column
-        maxWidth={720}
+        fillWidth
         horizontal="center"
         align="center"
         gap="16"
@@ -103,24 +101,23 @@ export const CommunityPreview: React.FC< React.ComponentProps<typeof Column> > =
             key={category}
             background={index === 0 ? "brand-medium" : "neutral-medium"}
             cursor="pointer"
+            effect={false}
           >
             {category}
           </Badge>
         ))}
       </Row>
 
-      <Row
+      <Grid
+        columns={2}
+        s={{ columns: 1 }}
         fillWidth
         gap="24"
-        wrap
-        horizontal="center"
       >
         {letters.map((letter) => (
           <Column
             key={letter.title}
-            flex={1}
-            minWidth={28}
-            maxWidth={40}
+            fillWidth
             background="surface"
             border="neutral-alpha-medium"
             radius="xl"
@@ -128,6 +125,7 @@ export const CommunityPreview: React.FC< React.ComponentProps<typeof Column> > =
             gap="24"
           >
             <Column gap="12">
+              <Tag variant="brand" position="absolute" top="0" right="0">{letter.category}</Tag>
               <Heading
                 as="h3"
                 variant="heading-strong-l"
@@ -145,20 +143,12 @@ export const CommunityPreview: React.FC< React.ComponentProps<typeof Column> > =
             </Column>
 
             <Column gap="16">
-              <Row
-                fillWidth
-                horizontal="between"
-                vertical="center"
+              <Text
+                variant="body-default-s"
+                onBackground="neutral-weak"
               >
-                <Badge>{letter.category}</Badge>
-
-                <Text
-                  variant="body-default-s"
-                  onBackground="neutral-weak"
-                >
-                  {letter.readTime}
-                </Text>
-              </Row>
+                {letter.readTime}
+              </Text>
 
               <Row
                 fillWidth
@@ -182,7 +172,6 @@ export const CommunityPreview: React.FC< React.ComponentProps<typeof Column> > =
 
                 <Button
                   variant="tertiary"
-                  size="l"
                   suffixIcon="arrowRight"
                 >
                   Read
@@ -191,7 +180,7 @@ export const CommunityPreview: React.FC< React.ComponentProps<typeof Column> > =
             </Column>
           </Column>
         ))}
-      </Row>
+      </Grid>
 
       <SmartLink href="/community">
         <Button

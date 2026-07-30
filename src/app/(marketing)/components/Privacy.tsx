@@ -41,10 +41,11 @@ const features = [
 
 export const Privacy: React.FC<React.ComponentProps<typeof Column>> = ({ ...flex }) => {
   return (
-    <Column fillWidth gap="40" {...flex} paddingX={4} paddingTop={8}>
+    <Column fillWidth gap="64" {...flex}>
       <Column
-        maxWidth="m"
-        paddingX="40"
+        fillWidth
+        horizontal="center"
+        align="center"
         gap="12"
       >
         <Text

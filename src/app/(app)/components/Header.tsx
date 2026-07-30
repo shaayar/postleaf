@@ -1,8 +1,6 @@
-"use client";
+import { Button, Row, Text, } from "@once-ui-system/core";
 
-import { Avatar, Button, Icon, Input, Row, Text, } from "@once-ui-system/core";
-
-export default function AppHeader() {
+export default function Header() {
     return (
         <Row
             fillWidth
