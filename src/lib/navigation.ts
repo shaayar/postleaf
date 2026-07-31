@@ -53,3 +53,49 @@ export const accountNav = [
     icon: "settings",
   },
 ];
+
+export const sidebarPrimaryNav = [
+  {
+    label: "Home",
+    href: appNav[0].href,
+    icon: appNav[0].icon,
+  },
+  {
+    label: "Write",
+    href: appNav[1].href,
+    icon: appNav[1].icon,
+  },
+  {
+    label: "Letters",
+    href: appNav[2].href,
+    icon: "mail",
+  },
+  {
+    label: "Collections",
+    href: appNav[3].href,
+    icon: "bookmark",
+  },
+];
+
+export const sidebarWorkspaceNav = [
+  {
+    label: "Drafts",
+    href: appNav[4].href,
+    icon: "document",
+  },
+  {
+    label: "Scheduled",
+    href: "/profile",
+    icon: "calendar",
+  },
+  {
+    label: "Archive",
+    href: "/profile/edit",
+    icon: "archive",
+  },
+  {
+    label: "Settings",
+    href: accountNav[1].href,
+    icon: accountNav[1].icon,
+  },
+];

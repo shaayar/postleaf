@@ -21,7 +21,7 @@ export default function Hero() {
             {/* Background Video */}
 
             <video
-                autoPlay
+                // autoPlay
                 muted
                 loop
                 playsInline
@@ -82,10 +82,10 @@ export default function Hero() {
                 paddingX="24"
             >
                 <Heading
-                    variant="display-strong-l"
+                    variant="display-strong-xl"
                     align="center"
                 >
-                    <RevealFx translateY={2} >
+                    <RevealFx translateY={6} >
                         Some words deserve
                         <br />
                         to last forever.
@@ -98,7 +98,7 @@ export default function Hero() {
                     // onBackground="neutral-medium"
                     wrap="balance"
                 >
-                    <RevealFx delay={0.6} translateY={2}>
+                    <RevealFx delay={0.6} translateY={6}>
                         Write personal letters, preserve meaningful moments, and share stories that <br /> outlive the moment they were written.
                     </RevealFx>
                 </Text>
@@ -109,7 +109,7 @@ export default function Hero() {
                     wrap
                     horizontal="center"
                 >
-                    <RevealFx delay={0.9} translateY={2}>
+                    <RevealFx delay={0.9} translateY={6}>
                         <Button
                             href={profile ? "/dashboard" : "/auth?state=login"}
                             label="Start Writing"

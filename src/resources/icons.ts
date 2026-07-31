@@ -3,8 +3,9 @@ import { IconType } from "react-icons";
 import { HiOutlineRocketLaunch, HiOutlineArrowRightStartOnRectangle, HiOutlineCog6Tooth, HiOutlineBookOpen, HiOutlineArchiveBoxArrowDown, HiOutlineUserGroup } from "react-icons/hi2";
 import { FaGithub, FaDiscord, FaThreads, FaLinkedinIn, FaArrowRight, FaInstagram,  FaStar } from "react-icons/fa6";
 import { CiEdit, CiLock, CiMail } from "react-icons/ci";
-import { IoHeartOutline, IoHomeOutline, IoSparklesOutline } from "react-icons/io5";
+import { IoHeartOutline, IoHomeOutline, IoSparklesOutline, IoEllipsisVerticalSharp } from "react-icons/io5";
 import { HiOutlineGlobeAlt } from "react-icons/hi";
+import { BsBookmark } from "react-icons/bs";
 
 export const iconLibrary: Record<string, IconType> = {
   rocket: HiOutlineRocketLaunch,
@@ -26,7 +27,9 @@ export const iconLibrary: Record<string, IconType> = {
   globe: HiOutlineGlobeAlt,
   archive: HiOutlineArchiveBoxArrowDown,
   sparkles: IoSparklesOutline,
-  mail: CiMail
+  mail: CiMail,
+  bookmark: BsBookmark,
+  ellipsis: IoEllipsisVerticalSharp,
 };
 
 export type IconLibrary = typeof iconLibrary;

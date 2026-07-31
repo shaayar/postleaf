@@ -1,8 +1,25 @@
 "use client";
 
-import { Avatar, Button, Icon, Input, Row, Text, } from "@once-ui-system/core";
+import { Button, IconButton, Row, Text } from "@once-ui-system/core";
+import { usePathname } from "next/navigation";
+import { appNav, accountNav } from "@/lib/navigation";
 
-export default function AppHeader() {
+interface AppHeaderProps {
+    sidebarOpen: boolean;
+    onToggleSidebar: () => void;
+}
+
+export default function AppHeader({
+    sidebarOpen,
+    onToggleSidebar,
+}: AppHeaderProps) {
+    const pathname = usePathname();
+
+    // Combine all navigation items to map paths to labels
+    const allNav = [...appNav, ...accountNav];
+    const currentPage = allNav.find((item) => item.href === pathname);
+    const pageTitle = currentPage?.label || "Dashboard";
+
     return (
         <Row
             fillWidth
@@ -18,19 +35,38 @@ export default function AppHeader() {
 
             <Row vertical="center">
                 <Text variant="heading-strong-l">
-                    Dashboard
+                    {pageTitle}
                 </Text>
             </Row>
 
             {/* Right */}
 
-            <Row vertical="center">
-                <Button
-                    variant="secondary"
-                    prefixIcon="plus"
-                    href="/write"
-                    label="New Letter"
+            <Row vertical="center" gap="12">
+                <IconButton
+                    variant="ghost"
+                    size="s"
+                    icon={sidebarOpen ? "chevronRight" : "chevronLeft"}
+                    tooltip={sidebarOpen ? "Close sidebar" : "Open sidebar"}
+                    tooltipPosition="bottom"
+                    onClick={onToggleSidebar}
+                    aria-label={sidebarOpen ? "Close sidebar" : "Open sidebar"}
                 />
+                {
+                    (pageTitle === "Profile") ? (
+                        <Button
+                            variant="secondary"
+                            prefixIcon="edit"
+                            href="/profile/edit"
+                            label="Edit Profile"
+                        />
+                    ) :
+                        <Button
+                            variant="secondary"
+                            prefixIcon="plus"
+                            href="/write"
+                            label="New Letter"
+                        />
+                }
             </Row>
         </Row>
     );

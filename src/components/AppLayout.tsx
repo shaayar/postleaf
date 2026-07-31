@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 
 import {
     Column,
@@ -17,24 +17,33 @@ interface AppLayoutProps {
 export default function AppLayout({
     children,
 }: AppLayoutProps) {
+    const [sidebarOpen, setSidebarOpen] = useState(true);
+
     return (
         <Row
             fill
+            fillWidth
             background="page"
+            style={{ minHeight: "100vh", height: "100vh", overflowX: "hidden" }}
         >
-            {/* Sidebar */}
-
-            <Sidebar />
-
             {/* Main */}
 
-            <Column fill fillHeight >
-                <AppHeader />
+            <Column fillHeight flex={1} as="main" minWidth={0}>
+                <AppHeader
+                    sidebarOpen={sidebarOpen}
+                    onToggleSidebar={() => setSidebarOpen((current) => !current)}
+                />
 
                 <Column fill padding="32" overflow="auto" >
                     {children}
                 </Column>
             </Column>
+
+            {/* Sidebar */}
+
+            {sidebarOpen ? (
+                <Sidebar onClose={() => setSidebarOpen(false)} />
+            ) : null}
         </Row>
     );
 }

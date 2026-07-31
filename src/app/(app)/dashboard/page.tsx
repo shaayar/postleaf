@@ -2,7 +2,7 @@ import { Button, Column, Heading, Row, Text, } from "@once-ui-system/core";
 
 export default function DashboardPage() {
     return (
-        <Column gap="32" paddingX={12} paddingTop={8}>
+        <Column gap="32">
             {/* Hero */}
 
             <Row fillWidth horizontal="between" vertical="center">
