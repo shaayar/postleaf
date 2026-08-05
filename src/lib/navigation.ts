@@ -30,11 +30,6 @@ export const appNav = [
     icon: "book",
   },
   {
-    label: "Vault",
-    href: "/vault",
-    icon: "lock",
-  },
-  {
     label: "Community",
     href: "/community",
     icon: "globe",
@@ -80,7 +75,7 @@ export const sidebarPrimaryNav = [
 export const sidebarWorkspaceNav = [
   {
     label: "Drafts",
-    href: appNav[4].href,
+    href: "/library",
     icon: "document",
   },
   {

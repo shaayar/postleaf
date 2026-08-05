@@ -31,16 +31,9 @@ const NAV_ITEMS = [
         href: "/community",
         icon: "group",
     },
-    {
-        label: "Vault",
-        href: "/vault",
-        icon: "lock",
-    },
 ];
 
-export const Header: React.FC<React.ComponentProps<typeof Row>> = ({
-    ...flex
-}) => {
+export const Header: React.FC<React.ComponentProps<typeof Row>> = ({...flex}) => {
     const { profile } = useUser();
     const router = useRouter();
 

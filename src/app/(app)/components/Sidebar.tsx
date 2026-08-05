@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 
-import { Avatar, Column, DropdownWrapper, Icon, IconButton, Line, Option, Row, Text, ToggleButton, User, } from "@once-ui-system/core";
+import { Avatar, Column, DropdownWrapper, Icon, Button, Line, Option, Row, Text, ToggleButton, User, } from "@once-ui-system/core";
 
 import { useUser } from "@/components/UserProvider";
 import { createClient } from "@/lib/sb/client";
@@ -42,7 +42,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
     "reader";
   const displayName = formatDisplayName(rawHandle);
   const username = `@${rawHandle.toLowerCase()}`;
-  const avatarSrc = profile?.avatar_url?.trim() || undefined;
+  const avatarSrc = profile?.avatar_url?.trim() || '/images/placeholder.png';
   const avatarValue = displayName
     .split(" ")
     .map((part) => part.charAt(0))
@@ -53,8 +53,6 @@ export default function Sidebar({ onClose }: SidebarProps) {
   return (
     <Column
       as="aside"
-      // width={280}
-      // minWidth={280}
       maxWidth={20}
       fillHeight
       background="surface"
@@ -66,18 +64,64 @@ export default function Sidebar({ onClose }: SidebarProps) {
       style={{ flex: "0 0 280px", flexShrink: 0, boxSizing: "border-box", right: 0 }}
     >
       <Row fillWidth horizontal="between" vertical="center">
-        
-        <IconButton
-          variant="ghost"
-          size="s"
-          icon="chevronRight"
-          tooltip="Close sidebar"
-          tooltipPosition="bottom"
+
+        <Button
+          suffixIcon="chevronRight"
           onClick={onClose}
           aria-label="Close sidebar"
+          label="Close sidebar"
         />
       </Row>
 
+      <Column
+        fill
+        gap="16"
+        overflowY="auto"
+        scrollbar="minimal"
+        paddingRight="4"
+      >
+        <Column gap="4">
+          {sidebarPrimaryNav.map((item) => (
+            <ToggleButton
+              key={item.href}
+              fillWidth
+              horizontal="start"
+              selected={isActiveRoute(pathname, item.href)}
+              href={item.href}
+              prefixIcon={item.icon}
+              label={item.label}
+              size="l"
+            />
+          ))}
+        </Column>
+
+        <Column gap="8" paddingTop="8">
+          <Text
+            variant="label-default-m"
+            onBackground="neutral-weak"
+            paddingX="8"
+          >
+            Workspace
+          </Text>
+          <Line />
+          <Column gap="4">
+            {sidebarWorkspaceNav.map((item) => (
+              <ToggleButton
+                key={item.href}
+                fillWidth
+                horizontal="start"
+                selected={isActiveRoute(pathname, item.href)}
+                href={item.href}
+                prefixIcon={item.icon}
+                label={item.label}
+                size="l"
+              />
+            ))}
+          </Column>
+        </Column>
+      </Column>
+
+      {/* user */}
       <Column gap="12" fillWidth>
         <DropdownWrapper
           fillWidth
@@ -143,52 +187,6 @@ export default function Sidebar({ onClose }: SidebarProps) {
             </Column>
           }
         />
-      </Column>
-
-      <Column
-        fill
-        gap="16"
-        overflowY="auto"
-        scrollbar="minimal"
-        paddingRight="4"
-      >
-        <Column gap="4">
-          {sidebarPrimaryNav.map((item) => (
-            <ToggleButton
-              key={item.href}
-              fillWidth
-              horizontal="start"
-              selected={isActiveRoute(pathname, item.href)}
-              href={item.href}
-              prefixIcon={item.icon}
-              label={item.label}
-            />
-          ))}
-        </Column>
-
-        <Column gap="8" paddingTop="8">
-          <Text
-            variant="label-default-s"
-            onBackground="neutral-weak"
-            paddingX="8"
-          >
-            Workspace
-          </Text>
-          <Line />
-          <Column gap="4">
-            {sidebarWorkspaceNav.map((item) => (
-              <ToggleButton
-                key={item.href}
-                fillWidth
-                horizontal="start"
-                selected={isActiveRoute(pathname, item.href)}
-                href={item.href}
-                prefixIcon={item.icon}
-                label={item.label}
-              />
-            ))}
-          </Column>
-        </Column>
       </Column>
     </Column>
   );

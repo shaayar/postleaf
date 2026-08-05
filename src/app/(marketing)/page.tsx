@@ -1,16 +1,7 @@
-import { Meta, Schema } from "@once-ui-system/core";
+import { Column, Meta, Schema } from "@once-ui-system/core";
 import { baseURL } from "@/resources/once-ui.config";
 import { meta } from "@/resources/seo";
-import Hero from "@/components/Landing/Hero";
-import { Introduction } from "@/components/Landing/Introduction";
-import WhyPostLeafExists from "@/components/Landing/WhyPostLeaf";
-import { Experiences } from "@/components/Landing/Experiences";
-import { Journey } from "@/components/Landing/Journey";
-import { CommunityPreview } from "@/components/Landing/CommunityPreview";
-import { Testimonials } from "@/components/Landing/Testimonials";
-import { Privacy } from "@/components/Landing/Privacy";
-import { FAQ } from "@/components/Landing/FAQ";
-import { CTA } from "@/components/Landing/CTA";
+import { Hero, Introduction, WhyPostLeaf, Journey, CommunityPreview, Testimonials, Privacy, FAQ, CTA } from "./components";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -28,24 +19,26 @@ export async function generateMetadata() {
 export default function Home() {
 
   return (
-    <>
-      <Schema
-        as="webPage"
-        baseURL={baseURL}
-        title={meta.home.title}
-        description={meta.home.description}
-        path={meta.home.path}
-      />
+    <Column fillWidth horizontal="center" gap="xl">
       <Hero />
-      <Introduction />
-      <WhyPostLeafExists />
-      {/* <Experiences /> */}
-      <Journey />
-      <CommunityPreview />
-      <Testimonials />
-      <Privacy />
-      <FAQ />
-      <CTA />
-    </>
+      <Column maxWidth="l" gap="xl" paddingX="l" paddingBottom="104">
+        <Schema
+          as="webPage"
+          baseURL={baseURL}
+          title={meta.home.title}
+          description={meta.home.description}
+          path={meta.home.path}
+        />
+        <Introduction />
+        <WhyPostLeaf />
+        {/* <Experiences /> */}
+        <Journey marginTop="xl" />
+        <CommunityPreview marginTop="xl" />
+        <Testimonials marginTop="xl" />
+        <Privacy marginTop="xl" />
+        <FAQ marginTop="xl" />
+        <CTA marginTop="xl" />
+      </Column>
+    </Column>
   );
 }

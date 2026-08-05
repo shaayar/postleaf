@@ -6,9 +6,7 @@ import {
   Column,
   Heading,
   Icon,
-  Line,
   Row,
-  Tag,
   Text,
 } from "@once-ui-system/core";
 
@@ -100,10 +98,9 @@ export const FAQ = (flex: React.ComponentProps<typeof Column>) => {
   const active = categories.find((category) => category.id === activeCategory) ?? categories[0];
 
   return (
-    <Column fillWidth horizontal="center" gap="48" {...flex} paddingX={4} paddingY={8}>
+    <Column fillWidth horizontal="center" gap="48" {...flex}>
       <Column
         fillWidth
-        maxWidth={48}
         gap="8"
         horizontal="center"
         align="center"
@@ -134,8 +131,8 @@ export const FAQ = (flex: React.ComponentProps<typeof Column>) => {
         </Text>
       </Column>
 
-      <Row fillWidth maxWidth="l" gap="24" paddingX="l" s={{ direction: "column" }}>
-        <Column minWidth={16} maxWidth={20} gap="8">
+      <Row fillWidth gap="24" s={{ direction: "column" }}>
+        <Column maxWidth={20} gap="8">
           {categories.map((category) => (
             <Row
               key={category.id}
@@ -164,33 +161,16 @@ export const FAQ = (flex: React.ComponentProps<typeof Column>) => {
           ))}
         </Column>
 
-        <Line vert hide s={{ hide: true }} background="neutral-alpha-weak" />
-
-        <Column fillWidth flex={1} gap="16">
-          <Column gap="4" marginBottom="8">
-            <Heading as="h3" variant="heading-strong-m">
-              {active.label}
-            </Heading>
-
-            <Text
-              variant="body-default-s"
-              onBackground="neutral-weak"
-            >
-              {active.description}
-            </Text>
-          </Column>
-
-          <Column fillWidth gap="8">
-            {active.items.map((item) => (
-              <Column key={item.title} fillWidth border radius="l" padding="4" background="overlay">
-                <Accordion title={<Text variant="body-default-s">{item.title}</Text>}>
-                  <Text variant="body-default-s" onBackground="neutral-medium">
-                    {item.content}
-                  </Text>
-                </Accordion>
-              </Column>
-            ))}
-          </Column>
+        <Column fillWidth gap="8">
+          {active.items.map((item) => (
+            <Column key={item.title} fillWidth border radius="l" padding="4" background="overlay">
+              <Accordion title={<Text variant="body-default-s">{item.title}</Text>}>
+                <Text variant="body-default-s" onBackground="neutral-medium">
+                  {item.content}
+                </Text>
+              </Accordion>
+            </Column>
+          ))}
         </Column>
       </Row>
     </Column>

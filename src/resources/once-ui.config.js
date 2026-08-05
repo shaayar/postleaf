@@ -1,6 +1,6 @@
 // IMPORTANT: Replace with your own domain address - it's used for SEO in meta tags and schema
 import { meta } from "./seo";
-const baseURL = "https://sb.once-ui.com";
+const baseURL = "https://postleaf.vercel.app";
 
 // Import and set font for each variant
 import { Cormorant_Garamond, Sora } from "next/font/google";
@@ -53,13 +53,13 @@ const fonts = {
 
 const style = {
   theme: "dark",
-  brand: "emerald",
+  brand: "orange",
   accent: "custom",
-  neutral: "gray",
+  neutral: "sand",
   border: "playful",
-  solid: "inverse",
+  solid: "contrast",
   solidStyle: "flat",
-  surface: "translucent",
+  surface: "filled",
   transition: "all",
   scaling: "100",
 }

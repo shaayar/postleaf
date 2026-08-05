@@ -1,14 +1,4 @@
-import {
-    Animation,
-    Background,
-    Button,
-    Column,
-    Grid,
-    Heading,
-    Media,
-    Row,
-    Text,
-} from "@once-ui-system/core";
+import { Animation, Background, Column, Grid, Heading, Media, Row, Text, } from "@once-ui-system/core";
 
 const introduction = {
     eyebrow: "A place for words that matter",
@@ -48,29 +38,10 @@ export const Introduction: React.FC<
         <Column
             fillWidth
             horizontal="center"
-            paddingTop={12}
-            paddingX={4}
-            position="relative"
             overflow="hidden"
             {...flex}
         >
-            <Column
-                fill
-                position="absolute"
-                style={{
-                    transform: "skewY(-4deg)",
-                }}
-            >
-                <Background
-                    fill
-                    // data="neutral-medium"
-                    mask={{
-                        cursor: true,
-                    }}
-                />
-            </Column>
-
-            <Column maxWidth="xl" fillWidth gap="80">
+            <Column fillWidth gap="80">
 
                 {/* Hero Layout */}
 
@@ -83,6 +54,11 @@ export const Introduction: React.FC<
                         // gap: "40",
                     }}
                 >
+                    <Media
+                        radius="l"
+                        src={introduction.image}
+                        alt="PostLeaf writing experience"
+                    />
                     <Column fillWidth gap="24">
 
                         <Text
@@ -111,13 +87,6 @@ export const Introduction: React.FC<
                             {introduction.description}
                         </Text>
                     </Column>
-
-                    <Media
-                        fillWidth
-                        radius="l"
-                        src={introduction.image}
-                        alt="PostLeaf writing experience"
-                    />
                 </Row>
 
                 {/* Pillars */}

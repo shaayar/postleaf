@@ -9,7 +9,7 @@ interface AppHeaderProps {
     onToggleSidebar: () => void;
 }
 
-export default function AppHeader({
+export default function Header({
     sidebarOpen,
     onToggleSidebar,
 }: AppHeaderProps) {
@@ -42,31 +42,18 @@ export default function AppHeader({
             {/* Right */}
 
             <Row vertical="center" gap="12">
-                <IconButton
-                    variant="ghost"
-                    size="s"
-                    icon={sidebarOpen ? "chevronRight" : "chevronLeft"}
-                    tooltip={sidebarOpen ? "Close sidebar" : "Open sidebar"}
-                    tooltipPosition="bottom"
+                <Button
+                    prefixIcon={sidebarOpen ? "chevronRight" : "chevronLeft"}
+                    label={sidebarOpen ? "Close sidebar" : "Open sidebar"}
                     onClick={onToggleSidebar}
                     aria-label={sidebarOpen ? "Close sidebar" : "Open sidebar"}
                 />
-                {
-                    (pageTitle === "Profile") ? (
-                        <Button
-                            variant="secondary"
-                            prefixIcon="edit"
-                            href="/profile/edit"
-                            label="Edit Profile"
-                        />
-                    ) :
-                        <Button
-                            variant="secondary"
-                            prefixIcon="plus"
-                            href="/write"
-                            label="New Letter"
-                        />
-                }
+                <Button
+                    variant="secondary"
+                    prefixIcon="edit"
+                    href="/profile/edit"
+                    label="Edit Profile"
+                />
             </Row>
         </Row>
     );

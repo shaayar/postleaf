@@ -1,7 +1,7 @@
 import { Column, Heading, Text, } from "@once-ui-system/core";
 import RevealText from "@/components/UI/RevealText";
 
-export default function WhyPostLeafExists() {
+export function WhyPostLeaf() {
     return (
         <Column
             fillWidth
@@ -10,7 +10,7 @@ export default function WhyPostLeafExists() {
             gap="80"
         >
             <Column
-                maxWidth={720}
+                fillWidth
                 horizontal="center"
                 gap="32"
             >
@@ -18,25 +18,23 @@ export default function WhyPostLeafExists() {
                     <Text variant="label-strong-m" onBackground="brand-weak">Why PostLeaf Exists</Text>
                 </RevealText>
 
-                <RevealText delay={0.05}>
+                <RevealText delay={0.06}>
                     <Heading as="h2" variant="display-default-l" align="center" wrap="balance">
                         Most digital conversations <br /> aren't built to be remembered.
                     </Heading>
                 </RevealText>
 
                 <RevealText delay={0.1}>
-                    <Text align="center" variant="body-default-l" onBackground="neutral-weak" wrap="balance">
-                        We write birthday wishes, letters to loved ones, late-night reflections, <br /> and promises to our future selves.
-                        <br /> <br />
-                        Yet they're scattered across chats, emails, notes, and forgotten folders
-                        <br /> <br />
+                    <Text align="center" as="p" variant="body-default-l" onBackground="neutral-weak" wrap="balance">
+                        We write birthday wishes, letters to loved ones, late-night reflections, <br /> and promises to our future selves. <br /> <br />                     
+                        Yet they're scattered across chats, emails, notes, and forgotten folders. <br /> <br />
                         PostLeaf was created to give those words a place where they could truly stay.
                     </Text>
                 </RevealText>
             </Column>
 
             <Column
-                maxWidth={720}
+                fillWidth
                 horizontal="center"
                 gap="40"
             >

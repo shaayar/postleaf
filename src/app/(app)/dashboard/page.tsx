@@ -7,9 +7,9 @@ export default function DashboardPage() {
 
             <Row fillWidth horizontal="between" vertical="center">
                 <Column gap="8">
-                    <Heading variant="display-strong-s">Dashboard</Heading>
+                    <Heading variant="display-strong-s">Welcome back, Shubham</Heading>
 
-                    <Text onBackground="neutral-weak">Welcome back, Shubham. Ready to write something meaningful?</Text>
+                    <Text onBackground="neutral-weak">Ready to write something meaningful?</Text>
                 </Column>
 
                 <Button href="/write" prefixIcon="plus" label="New Letter"/>

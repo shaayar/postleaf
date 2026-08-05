@@ -47,12 +47,10 @@ export const Journey: React.FC< React.ComponentProps<typeof Column> > = ({ ...re
       fillWidth
       horizontal="center"
       gap="80"
-      paddingY={8}
-      paddingX={4}
       {...rest}
     >
       <Column
-        maxWidth={720}
+        fillWidth
         horizontal="center"
         align="center"
         gap="16"
@@ -85,7 +83,6 @@ export const Journey: React.FC< React.ComponentProps<typeof Column> > = ({ ...re
 
       <Column
         fillWidth
-        maxWidth="xl"
         gap="128"
       >
         {journey.map((item, index) => (
@@ -148,7 +145,7 @@ export const Journey: React.FC< React.ComponentProps<typeof Column> > = ({ ...re
               </Heading>
 
               <Text
-                variant="body-default-l"
+                variant="body-default-s"
                 onBackground="neutral-weak"
                 wrap="balance"
                 align={index % 2 === 0 ? "left" : "right"}
