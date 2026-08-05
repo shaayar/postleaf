@@ -1,13 +1,13 @@
 "use client";
 
-import { Column, Row, Text, Button, Input, Textarea, Spinner, Dialog } from "@once-ui-system/core";
+import { Button, Column, Input, Row, Spinner, Text, Textarea } from "@once-ui-system/core";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/sb/client";
 import { useUser } from "@/components/UserProvider";
+import { profileValidation } from "@/resources/validation";
 
 export default function EditProfilePage() {
-  const { profile, refreshUser } = useUser();
+  const { profile, refresh } = useUser();
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -27,17 +27,24 @@ export default function EditProfilePage() {
     setSaving(true);
 
     try {
-      const supabase = createClient();
-      const { error } = await supabase.auth.updateUser({
-        data: {
+      const response = await fetch("/api/profile", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
           username: username.trim(),
           bio: bio.trim(),
-        },
+        }),
       });
 
-      if (error) throw error;
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}));
+        throw new Error(body?.error || `Request failed (${response.status})`);
+      }
 
-      await refreshUser();
+      await refresh();
       router.push("/profile");
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Failed to update profile";
@@ -57,7 +64,7 @@ export default function EditProfilePage() {
   }
 
   return (
-    <Column fill fillHeight padding="32" gap="24" maxWidth="600" horizontal="center">
+    <Column fill fillHeight padding="32" gap="24" maxWidth={600} horizontal="center">
       <Text variant="heading-strong-l">Edit Profile</Text>
 
       <Column gap="24" background="surface" border="neutral-alpha-weak" padding="24" radius="l">
@@ -66,11 +73,12 @@ export default function EditProfilePage() {
             <Column gap="8">
               <Text variant="label-default-m">Username</Text>
               <Input
+                id="username"
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter username"
-                maxLength={30}
+                maxLength={profileValidation.username.max_length}
                 disabled={saving}
               />
             </Column>
@@ -78,15 +86,16 @@ export default function EditProfilePage() {
             <Column gap="8">
               <Text variant="label-default-m">Bio</Text>
               <Textarea
+                id="bio"
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
                 placeholder="Tell us about yourself"
-                maxLength={160}
+                maxLength={profileValidation.bio.max_length}
                 lines={4}
                 disabled={saving}
               />
               <Text variant="label-default-s" color="neutral-muted">
-                {bio.length}/160
+                {bio.length}/{profileValidation.bio.max_length}
               </Text>
             </Column>
 

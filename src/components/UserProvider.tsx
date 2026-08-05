@@ -1,13 +1,8 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { createClient } from "@/lib/sb/client";
-
-type Profile = {
-  avatar_url: string | null;
-  username: string | null;
-  bio: string | null;
-};
+import type { Profile } from "@/types";
+import { createClient } from "@/lib/sb/browser";
 
 type UserContextValue = {
   loading: boolean;
