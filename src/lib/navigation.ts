@@ -49,6 +49,14 @@ export const accountNav = [
   },
 ];
 
+export const archiveNav = [
+  {
+    label: "Archive",
+    href: "/archive",
+    icon: "archive",
+  },
+];
+
 export const sidebarPrimaryNav = [
   {
     label: "Home",
@@ -85,7 +93,7 @@ export const sidebarWorkspaceNav = [
   },
   {
     label: "Archive",
-    href: "/profile/edit",
+    href: "/archive",
     icon: "archive",
   },
   {

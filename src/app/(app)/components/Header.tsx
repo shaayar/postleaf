@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, IconButton, Row, Text } from "@once-ui-system/core";
+import { Button, Logo, Row, Text } from "@once-ui-system/core";
 import { usePathname } from "next/navigation";
 import { appNav, accountNav } from "@/lib/navigation";
 
@@ -32,6 +32,24 @@ export default function Header({
             background="surface"
         >
             {/* Left */}
+
+            <Row gap="32" vertical="center">
+                <Logo
+                    dark
+                    icon="/trademarks/wordmark-dark.svg"
+                    href="/"
+                    size="s"
+                />
+
+                <Logo
+                    light
+                    icon="/trademarks/wordmark-light.svg"
+                    href="/"
+                    size="s"
+                />
+            </Row>
+
+            {/* Center */}
 
             <Row vertical="center">
                 <Text variant="heading-strong-l">

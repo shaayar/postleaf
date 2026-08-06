@@ -5,8 +5,10 @@ import { useRouter } from "next/navigation";
 import {
   Button,
   Column,
+  DropdownWrapper,
   Heading,
   IconButton,
+  Option,
   Input,
   Row,
   Select,
@@ -18,7 +20,12 @@ import {
 } from "@once-ui-system/core";
 
 import type { LetterDetail } from "@/types";
-import { createLetterAction, updateLetterAction } from "./actions";
+import {
+  createLetterAction,
+  deleteLetterAction,
+  updateLetterAction,
+  updateLetterStatusAction,
+} from "./actions";
 
 type Mode = "create" | "edit";
 
@@ -32,6 +39,33 @@ function getDefaultCollection(value: string | null | undefined) {
 
 function getLetterTitle(letter: LetterDetail | null) {
   return letter?.title?.trim() || "Untitled Letter";
+}
+
+function getStatusCopy(status: LetterDetail["status"]) {
+  if (status === "published") {
+    return {
+      label: "Published",
+      visibility: "Public",
+      nextPrimaryAction: "Move to Draft",
+      nextPrimaryStatus: "draft" as const,
+    };
+  }
+
+  if (status === "archived") {
+    return {
+      label: "Archived",
+      visibility: "Private",
+      nextPrimaryAction: "Publish",
+      nextPrimaryStatus: "published" as const,
+    };
+  }
+
+  return {
+    label: "Draft",
+    visibility: "Private",
+    nextPrimaryAction: "Publish",
+    nextPrimaryStatus: "published" as const,
+  };
 }
 
 export default function LetterEditor({
@@ -48,12 +82,89 @@ export default function LetterEditor({
   const [receiver, setReceiver] = useState(getDefaultReceiver(letter?.recipient_label));
   const [collection, setCollection] = useState(getDefaultCollection(letter?.collection));
   const [saving, setSaving] = useState(false);
+  const [actionBusy, setActionBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastSavedLabel, setLastSavedLabel] = useState(
     mode === "edit" && letter ? `Last saved ${letter.updated_at_label}` : "Saved as draft",
   );
 
   const isEditing = mode === "edit" && Boolean(letter);
+  const letterStatus = letter?.status ?? "draft";
+  const statusCopy = getStatusCopy(letterStatus);
+
+  const handleStatusAction = async (nextStatus: "draft" | "published" | "archived") => {
+    if (!letter) {
+      return;
+    }
+
+    setActionBusy(true);
+    setError(null);
+
+    try {
+      const updated = await updateLetterStatusAction({
+        id: letter.id,
+        status: nextStatus,
+      });
+
+      setLastSavedLabel(`Updated to ${updated.status} just now`);
+      addToast({
+        variant: "success",
+        message: `${getLetterTitle(updated)} is now ${updated.status}.`,
+      });
+      router.refresh();
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error ? err.message : "Failed to update letter status";
+
+      setError(message);
+      addToast({
+        variant: "danger",
+        message,
+      });
+    } finally {
+      setActionBusy(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!letter) {
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `Delete "${getLetterTitle(letter)}"? This cannot be undone.`,
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    setActionBusy(true);
+    setError(null);
+
+    try {
+      await deleteLetterAction(letter.id);
+      addToast({
+        variant: "success",
+        message: `${getLetterTitle(letter)} deleted.`,
+      });
+      router.replace("/library");
+      router.refresh();
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error ? err.message : "Failed to delete letter";
+
+      setError(message);
+      addToast({
+        variant: "danger",
+        message,
+      });
+    } finally {
+      setActionBusy(false);
+    }
+  };
+
+  const isBusy = saving || actionBusy;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -118,7 +229,68 @@ export default function LetterEditor({
               {lastSavedLabel}
             </Text>
 
-            <IconButton icon="ellipsis" />
+            {isEditing ? (
+              <DropdownWrapper
+                trigger={
+                  <IconButton
+                    icon="ellipsis"
+                    tooltip="Letter options"
+                    type="button"
+                    disabled={isBusy}
+                  />
+                }
+                dropdown={
+                  <Column fillWidth padding="4" gap="2">
+                    <Option
+                      value={statusCopy.nextPrimaryStatus}
+                      label={statusCopy.nextPrimaryAction}
+                      onClick={(value) =>
+                        void handleStatusAction(
+                          value as "draft" | "published" | "archived",
+                        )
+                      }
+                      disabled={isBusy}
+                    />
+
+                    {letterStatus !== "archived" ? (
+                      <Option
+                        value="archived"
+                        label="Archive"
+                        onClick={(value) =>
+                          void handleStatusAction(
+                            value as "draft" | "published" | "archived",
+                          )
+                        }
+                        disabled={isBusy}
+                      />
+                    ) : (
+                      <Option
+                        value="draft"
+                        label="Restore to Draft"
+                        onClick={(value) =>
+                          void handleStatusAction(
+                            value as "draft" | "published" | "archived",
+                          )
+                        }
+                        disabled={isBusy}
+                      />
+                    )}
+
+                    <Option
+                      value="delete"
+                      label="Delete Letter"
+                      danger
+                      onClick={() => {
+                        void handleDelete();
+                      }}
+                      disabled={isBusy}
+                    />
+                  </Column>
+                }
+                placement="bottom-end"
+                minWidth={18}
+              />
+            ) : null}
           </Row>
         </Row>
 
@@ -225,7 +397,7 @@ export default function LetterEditor({
                   type="submit"
                   label={saving ? "Saving..." : isEditing ? "Update Letter" : "Seal Letter"}
                   size="m"
-                  disabled={saving}
+                  disabled={isBusy}
                 />
               </Row>
             </Column>
