@@ -57,12 +57,6 @@ export default function ProfileClient({
   const displayName = formatDisplayName(profile?.full_name ?? profile?.username);
   const username = `@${profile?.username?.trim() || "reader"}`;
   const avatarSrc = profile?.avatar_url?.trim() || "/images/placeholder.png";
-  const avatarValue = displayName
-    .split(" ")
-    .map((part) => part.charAt(0))
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
 
   const currentDraft =
     recentLetters.find((letter) => letter.status === "draft") ?? recentLetters[0];
@@ -81,7 +75,7 @@ export default function ProfileClient({
 
           <Avatar
             src={avatarSrc}
-            value={avatarValue}
+            // value={avatarValue}
             size="xl"
             borderWidth={8}
             style={{

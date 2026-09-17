@@ -4,21 +4,24 @@ import { Column, Line, Logo, Row, SmartLink, Text } from "@once-ui-system/core";
 import { LoginForm } from "./components/LogInForm";
 import { SignUpForm } from "./components/SignUpForm";
 import { ForgotPasswordForm } from "./components/ForgotPasswordForm";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 function AuthInner() {
-  const [state, setState] = useState("login");
   const searchParams = useSearchParams();
+  const [state, setState] = useState("login");
+  const [previousState, setPreviousState] = useState(searchParams.get("state"));
 
-  useEffect(() => {
-    const qp = searchParams.get("state");
-    if (!qp) return;
-    const allowed = new Set(["login", "signup", "forgot-password"]);
-    if (allowed.has(qp)) {
-      setState(qp);
+  const qp = searchParams.get("state");
+  if (previousState !== qp) {
+    setPreviousState(qp);
+    if (qp) {
+      const allowed = new Set(["login", "signup", "forgot-password"]);
+      if (allowed.has(qp)) {
+        setState(qp);
+      }
     }
-  }, [searchParams]);
+  }
 
   return (
     <>

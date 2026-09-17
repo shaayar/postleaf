@@ -1,6 +1,7 @@
 export {
   createLetter,
   deleteLetter,
+  publishLetter,
   updateLetter,
   updateLetterStatus,
 } from "./letters";

@@ -23,6 +23,7 @@ import type { LetterDetail } from "@/types";
 import {
   createLetterAction,
   deleteLetterAction,
+  publishLetterAction,
   updateLetterAction,
   updateLetterStatusAction,
 } from "./actions";
@@ -46,8 +47,8 @@ function getStatusCopy(status: LetterDetail["status"]) {
     return {
       label: "Published",
       visibility: "Public",
-      nextPrimaryAction: "Move to Draft",
-      nextPrimaryStatus: "draft" as const,
+      nextStatusAction: "Move to Draft",
+      nextStatusValue: "draft" as const,
     };
   }
 
@@ -55,16 +56,16 @@ function getStatusCopy(status: LetterDetail["status"]) {
     return {
       label: "Archived",
       visibility: "Private",
-      nextPrimaryAction: "Publish",
-      nextPrimaryStatus: "published" as const,
+      nextStatusAction: "Restore to Draft",
+      nextStatusValue: "draft" as const,
     };
   }
 
   return {
     label: "Draft",
     visibility: "Private",
-    nextPrimaryAction: "Publish",
-    nextPrimaryStatus: "published" as const,
+    nextStatusAction: "Archive",
+    nextStatusValue: "archived" as const,
   };
 }
 
@@ -91,6 +92,36 @@ export default function LetterEditor({
   const isEditing = mode === "edit" && Boolean(letter);
   const letterStatus = letter?.status ?? "draft";
   const statusCopy = getStatusCopy(letterStatus);
+
+  const handlePublish = async () => {
+    if (!letter) {
+      return;
+    }
+
+    setActionBusy(true);
+    setError(null);
+
+    try {
+      const snapshot = await publishLetterAction(letter.id);
+      setLastSavedLabel(`Published version ${snapshot.version}`);
+      addToast({
+        variant: "success",
+        message: `Published ${getLetterTitle(letter)} to Discover.`,
+      });
+      router.refresh();
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error ? err.message : "Failed to publish letter";
+
+      setError(message);
+      addToast({
+        variant: "danger",
+        message,
+      });
+    } finally {
+      setActionBusy(false);
+    }
+  };
 
   const handleStatusAction = async (nextStatus: "draft" | "published" | "archived") => {
     if (!letter) {
@@ -242,8 +273,17 @@ export default function LetterEditor({
                 dropdown={
                   <Column fillWidth padding="4" gap="2">
                     <Option
-                      value={statusCopy.nextPrimaryStatus}
-                      label={statusCopy.nextPrimaryAction}
+                      value="publish"
+                      label={letterStatus === "published" ? "Publish new version" : "Publish"}
+                      onClick={(value) =>
+                        void handlePublish()
+                      }
+                      disabled={isBusy}
+                    />
+
+                    <Option
+                      value={statusCopy.nextStatusValue}
+                      label={statusCopy.nextStatusAction}
                       onClick={(value) =>
                         void handleStatusAction(
                           value as "draft" | "published" | "archived",
@@ -251,30 +291,6 @@ export default function LetterEditor({
                       }
                       disabled={isBusy}
                     />
-
-                    {letterStatus !== "archived" ? (
-                      <Option
-                        value="archived"
-                        label="Archive"
-                        onClick={(value) =>
-                          void handleStatusAction(
-                            value as "draft" | "published" | "archived",
-                          )
-                        }
-                        disabled={isBusy}
-                      />
-                    ) : (
-                      <Option
-                        value="draft"
-                        label="Restore to Draft"
-                        onClick={(value) =>
-                          void handleStatusAction(
-                            value as "draft" | "published" | "archived",
-                          )
-                        }
-                        disabled={isBusy}
-                      />
-                    )}
 
                     <Option
                       value="delete"

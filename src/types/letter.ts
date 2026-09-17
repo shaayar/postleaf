@@ -66,3 +66,23 @@ export interface LetterStats {
   archived_count: number;
   total_count: number;
 }
+
+export interface PublicLetter {
+  id: string;
+  original_letter_id: string;
+  user_id: string;
+  version: number;
+  title: string | null;
+  content: string;
+  excerpt: string;
+  created_at: string;
+  published_at: string;
+}
+
+export interface PublicLetterListItem {
+  id: string;
+  title: string | null;
+  content: string;
+  excerpt: string;
+  published_at: string;
+}

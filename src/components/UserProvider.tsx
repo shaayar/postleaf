@@ -22,8 +22,6 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
 
   const load = async () => {
     try {
-      setLoading(true);
-      setError(null);
       const res = await fetch("/api/profile", {
         credentials: "include",
         cache: "no-store",
@@ -38,6 +36,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       };
       setProfile(data.profile ?? null);
       setUserEmail(data.email ?? null);
+      setError(null);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to fetch user profile");
       setProfile(null);

@@ -222,3 +222,62 @@ export async function deleteLetter(id: string): Promise<{ id: string }> {
 
   return { id };
 }
+
+export async function publishLetter(
+  letterId: string,
+): Promise<{ id: string; version: number; published_at: string }> {
+  const { supabase, user } = await getCurrentUser();
+
+  const { data: originalLetter, error: fetchError } = await supabase
+    .from("letters")
+    .select("id, user_id, title, content")
+    .eq("id", letterId)
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  if (fetchError) {
+    throw new Error(fetchError.message);
+  }
+
+  if (!originalLetter) {
+    throw new Error("Letter not found or unauthorized");
+  }
+
+  const { count, error: countError } = await supabase
+    .from("public_letters")
+    .select("id", { count: "exact", head: true })
+    .eq("original_letter_id", originalLetter.id);
+
+  if (countError) {
+    throw new Error(countError.message);
+  }
+
+  const version = (count ?? 0) + 1;
+  const publishedAt = new Date().toISOString();
+
+  const { data, error } = await supabase
+    .from("public_letters")
+    .insert({
+      original_letter_id: originalLetter.id,
+      user_id: user.id,
+      version,
+      title: originalLetter.title,
+      content: originalLetter.content,
+      excerpt: buildExcerpt(originalLetter.content),
+      published_at: publishedAt,
+    })
+    .select("id, version, published_at")
+    .single();
+
+  if (error || !data) {
+    throw new Error(error?.message || "Failed to create public snapshot");
+  }
+
+  revalidatePath("/discover");
+
+  return {
+    id: data.id,
+    version: data.version,
+    published_at: data.published_at,
+  };
+}

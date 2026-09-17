@@ -30,8 +30,8 @@ export const appNav = [
     icon: "book",
   },
   {
-    label: "Community",
-    href: "/community",
+    label: "Discover",
+    href: "/discover",
     icon: "globe",
   },
 ];
@@ -73,11 +73,7 @@ export const sidebarPrimaryNav = [
     href: appNav[2].href,
     icon: "mail",
   },
-  {
-    label: "Collections",
-    href: appNav[3].href,
-    icon: "bookmark",
-  },
+
 ];
 
 export const sidebarWorkspaceNav = [

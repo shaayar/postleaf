@@ -6,6 +6,8 @@ export type {
   LetterStatus,
   LetterStatusInput,
   LetterStats,
+  PublicLetter,
+  PublicLetterListItem,
   LetterSummary,
   LetterUpdateInput,
   LetterVisibility,

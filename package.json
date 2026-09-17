@@ -7,7 +7,7 @@
     "export": "next export",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "biome-write": "npx @biomejs/biome format --write ."
   },
   "dependencies": {
@@ -27,11 +27,15 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@eslint/eslintrc": "^3.3.6",
+    "@eslint/js": "^9.39.5",
     "@types/node": "20.17.23",
     "@types/react": "19.2.3",
     "@types/react-dom": "19.2.3",
     "eslint": "^9.35.0",
-    "typescript": "5.8.2"
+    "eslint-config-next": "^16.3.0",
+    "typescript": "5.8.2",
+    "typescript-eslint": "^8.67.0"
   },
   "overrides": {
     "@types/react": "19.2.3",

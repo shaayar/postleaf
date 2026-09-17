@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Column, Input, Row, Spinner, Text, Textarea } from "@once-ui-system/core";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/components/UserProvider";
 import { profileValidation } from "@/resources/validation";
@@ -11,15 +11,17 @@ export default function EditProfilePage() {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [username, setUsername] = useState("");
-  const [bio, setBio] = useState("");
+  const [username, setUsername] = useState(profile?.username || "");
+  const [bio, setBio] = useState(profile?.bio || "");
+  const [previousProfile, setPreviousProfile] = useState(profile);
 
-  useEffect(() => {
+  if (profile !== previousProfile) {
+    setPreviousProfile(profile);
     if (profile) {
       setUsername(profile.username || "");
       setBio(profile.bio || "");
     }
-  }, [profile]);
+  }
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -10,3 +10,4 @@ export {
   listLetters,
   searchLetters,
 } from "./letters";
+export { listPublicLetters } from "./publicLetters";

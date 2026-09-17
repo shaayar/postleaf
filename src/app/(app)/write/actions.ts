@@ -1,6 +1,12 @@
 "use server";
 
-import { createLetter, deleteLetter, updateLetter, updateLetterStatus } from "@/lib/actions";
+import {
+  createLetter,
+  deleteLetter,
+  publishLetter,
+  updateLetter,
+  updateLetterStatus,
+} from "@/lib/actions";
 
 export async function createLetterAction(input: unknown) {
   return createLetter(input);
@@ -16,4 +22,8 @@ export async function updateLetterStatusAction(input: unknown) {
 
 export async function deleteLetterAction(id: string) {
   return deleteLetter(id);
+}
+
+export async function publishLetterAction(letterId: string) {
+  return publishLetter(letterId);
 }
